@@ -1,7 +1,7 @@
 [project]
 name = "aio-pvpc"
 version = "4.4.0"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 
 description = "Retrieval of Spanish Electricity hourly prices (PVPC)"
 keywords = ["pvpc", "Precio Voluntario para el Pequeño Consumidor"]
@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "aiohttp>=3.13.5",
+    "aiohttp (>=3.13.5)",
 ]
 
 [project.urls]
