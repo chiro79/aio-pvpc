@@ -1,13 +1,13 @@
-"""Tests for aiopvpc."""
+"""Tests for aio_pvpc."""
 
 from __future__ import annotations
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
-from aiopvpc.const import (
+from aio_pvpc.const import (
     ALL_SENSORS,
     KEY_ADJUSTMENT,
     KEY_INJECTION,
@@ -15,10 +15,9 @@ from aiopvpc.const import (
     KEY_OMIE,
     KEY_PVPC,
     TARIFFS,
-    UTC_TZ,
 )
-from aiopvpc.ha_helpers import get_enabled_sensor_keys, make_sensor_unique_id
-from aiopvpc.pvpc_data import BadApiTokenAuthError, PVPCData
+from aio_pvpc.ha_helpers import get_enabled_sensor_keys, make_sensor_unique_id
+from aio_pvpc.pvpc_data import BadApiTokenAuthError, PVPCData
 from tests.conftest import check_num_datapoints, MockAsyncSession, run_h_step
 
 
@@ -49,7 +48,7 @@ def test_sensor_unique_ids():
 
 @pytest.mark.asyncio
 async def test_disable_sensors():
-    start = datetime(2024, 3, 9, 19, tzinfo=UTC_TZ)
+    start = datetime(2024, 3, 9, 19, tzinfo=timezone.utc)
     mock_session = MockAsyncSession()
     sensor_keys = ALL_SENSORS
     assert len(sensor_keys) == 5
@@ -109,7 +108,7 @@ async def test_disable_sensors():
 
 @pytest.mark.asyncio
 async def test_check_api_token():
-    start = datetime(2024, 3, 9, 19, tzinfo=UTC_TZ)
+    start = datetime(2024, 3, 9, 19, tzinfo=timezone.utc)
     mock_session = MockAsyncSession(status=401)
     pvpc_data = PVPCData(session=mock_session)
     token_ok = await pvpc_data.check_api_token(start, "bad_token")

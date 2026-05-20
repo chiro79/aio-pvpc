@@ -1,4 +1,4 @@
-"""Tests for aiopvpc."""
+"""Tests for aio-pvpc."""
 
 from __future__ import annotations
 
@@ -7,9 +7,9 @@ import logging
 import pathlib
 import zoneinfo
 from datetime import date, datetime, timedelta
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Unpack
 
-from aiopvpc.const import (
+from aio_pvpc.const import (
     ESIOS_INJECTION,
     ESIOS_MAG,
     ESIOS_MARKET_ADJUSTMENT,
@@ -19,7 +19,10 @@ from aiopvpc.const import (
 )
 
 if TYPE_CHECKING:
-    from aiopvpc.pvpc_data import EsiosApiData, PVPCData
+    from aiohttp.client import _RequestOptions
+    from aiohttp.typedefs import StrOrURL
+
+    from aio_pvpc.pvpc_data import EsiosApiData, PVPCData
 
 TEST_EXAMPLES_PATH = pathlib.Path(__file__).parent / "api_examples"
 TZ_TEST = zoneinfo.ZoneInfo("Atlantic/Canary")
@@ -106,7 +109,7 @@ class MockAsyncSession:
         """Dumb await."""
         return self._raw_response
 
-    async def get(self, url: str, *_args, **_kwargs):
+    async def get(self, url: StrOrURL, **_kwargs: Unpack[_RequestOptions]):
         """Dumb await."""
         self._counter += 1
         if self.exc:

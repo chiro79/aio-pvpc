@@ -1,4 +1,6 @@
-"""ESIOS API handler for HomeAssistant. PVPC tariff periods."""
+"""ESIOS API handler for HomeAssistant. PVPC tariff periods.
+Check calendar in https://administracion.gob.es/pag_Home/atencionCiudadana/calendarios/laboral.html
+and the current year in https://www.seg-social.es/wps/portal/wss/internet/CalendarioLaboral/"""
 
 from __future__ import annotations
 
@@ -49,7 +51,7 @@ _NATIONAL_EXTRA_HOLIDAYS_FOR_P3_PERIOD = {
         date(2023, 12, 8): "(viernes), La Inmaculada Concepción",
         date(2023, 12, 25): "(lunes), Navidad",
     },
-    2024: {
+    2024: { # https://administracion.gob.es/pag_Home/dam/jcr:b7065359-7be5-4e40-bf0b-3d841407621b/Calendario_Laboral2024.pdf
         date(2024, 1, 1): "(lunes), Año nuevo",
         # date(2024, 1, 6): "(sábado), Epifanía del Señor",
         # date(2024, 3, 28): "(jueves), Jueves Santo",
@@ -62,7 +64,7 @@ _NATIONAL_EXTRA_HOLIDAYS_FOR_P3_PERIOD = {
         # date(2024, 12, 8): "(domingo), La Inmaculada Concepción",
         date(2024, 12, 25): "(miércoles), Navidad",
     },
-    2025: {
+    2025: { # https://administracion.gob.es/pag_Home/dam/jcr:669bbdba-cfd2-4bb3-9eb2-3876f38ab714/Calendario_Laboral2025-Nuevo.pdf
         date(2025, 1, 1): "(miércoles), Año nuevo",
         date(2025, 1, 6): "(lunes), Epifanía del Señor",
         # date(2025, 4, 17): "(jueves), Jueves Santo",
@@ -74,6 +76,39 @@ _NATIONAL_EXTRA_HOLIDAYS_FOR_P3_PERIOD = {
         # date(2025, 12, 6): "(sábado), Día de la Constitución Española",
         date(2025, 12, 8): "(lunes), La Inmaculada Concepción",
         date(2025, 12, 25): "(jueves), Navidad",
+    },
+    2026: { # https://administracion.gob.es/pag_Home/dam/jcr:06b4b4ab-b5fa-4d05-badf-a763eb094c3d/Calendario_Laboral2026.pdf
+        date(2026, 1, 1): "(jueves), Año nuevo",
+        date(2026, 1, 6): "(martes), Epifanía del Señor",
+        date(2026, 5, 1): "(viernes), Día del Trabajador",
+        # date(2026, 8, 15): "(sábado), Asunción de la Virgen",
+        date(2026, 10, 12): "(lunes), Día de la Hispanidad",
+        # date(2026, 11, 1): "(domingo), Todos los Santos",
+        # date(2026, 12, 6): "(domingo), Día de la Constitución Española",
+        date(2026, 12, 8): "(martes), La Inmaculada Concepción",
+        date(2026, 12, 25): "(viernes), Navidad",
+    },
+    2027: { # 2026-05-21 - Provisional
+        date(2027, 1, 1): "(viernes), Año nuevo",
+        date(2027, 1, 6): "(miércoles), Epifanía del Señor",
+        # date(2027, 5, 1): "(sábado), Día del Trabajador",
+        # date(2027, 8, 15): "(domingo), Asunción de la Virgen",
+        date(2027, 10, 12): "(martes), Día de la Hispanidad",
+        date(2027, 11, 1): "(lunes), Todos los Santos",
+        date(2027, 12, 6): "(lunes), Día de la Constitución Española",
+        date(2027, 12, 8): "(miércoles), La Inmaculada Concepción",
+        date(2027, 12, 25): "(sábado), Navidad",
+    },
+    2028: { # 2026-05-21 - Provisional
+        # date(2028, 1, 1): "(sábado), Año nuevo",
+        date(2028, 1, 6): "(jueves), Epifanía del Señor",
+        date(2028, 5, 1): "(lunes), Día del Trabajador",
+        date(2028, 8, 15): "(martes), Asunción de la Virgen",
+        date(2028, 10, 12): "(jueves), Día de la Hispanidad",
+        date(2028, 11, 1): "(miércoles), Todos los Santos",
+        date(2028, 12, 6): "(miércoles), Día de la Constitución Española",
+        date(2028, 12, 8): "(viernes), La Inmaculada Concepción",
+        date(2028, 12, 25): "(lunes), Navidad",
     },
 }
 

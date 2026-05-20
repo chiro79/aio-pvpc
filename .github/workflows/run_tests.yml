@@ -12,17 +12,17 @@ jobs:
       pull-requests: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: 3.10
 
-      - name: Run Poetry image
-        uses: abatilo/actions-poetry@v2.0.0
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v4
         with:
-          poetry-version: 1.7.1
+          poetry-version: 2.4.0
 
       - name: Install library
         run: poetry install --no-interaction
@@ -31,7 +31,7 @@ jobs:
         run: poetry run pytest --cov-report xml:coverage.xml
 
       - name: Get Cover
-        uses: orgoro/coverage@v3.1
+        uses: orgoro/coverage@v3
         with:
           coverageFile: coverage.xml
           token: ${{ secrets.GITHUB_TOKEN }}

@@ -20,7 +20,6 @@ DEFAULT_POWER_KW = 3.3
 
 # Prices are given in 0 to 24h sets, adjusted to the main timezone in Spain
 REFERENCE_TZ = zoneinfo.ZoneInfo("Europe/Madrid")
-UTC_TZ = zoneinfo.ZoneInfo("UTC")
 
 DEFAULT_TIMEOUT = 10
 PRICE_PRECISION = 5

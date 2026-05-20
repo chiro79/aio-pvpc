@@ -1,11 +1,11 @@
-"""Tests for aiopvpc."""
+"""Tests for aio_pvpc."""
 
 from datetime import datetime, timedelta
 from typing import cast
 
 import pytest
 
-from aiopvpc.const import (
+from aio_pvpc.const import (
     ALL_SENSORS,
     DataSource,
     KEY_ADJUSTMENT,
@@ -16,7 +16,7 @@ from aiopvpc.const import (
     REFERENCE_TZ,
     SENSOR_KEY_TO_DATAID,
 )
-from aiopvpc.pvpc_data import PVPCData
+from aio_pvpc.pvpc_data import PVPCData
 from tests.conftest import MockAsyncSession, TZ_TEST
 
 
@@ -60,7 +60,7 @@ async def test_price_extract(
         session=mock_session,
         tariff="2.0TD",
         local_timezone=timezone,
-        data_source=cast(DataSource, source),
+        data_source=cast("DataSource", source),
         api_token="test-token" if source == "esios" else None,
     )
 
@@ -76,7 +76,7 @@ async def test_price_extract(
     assert len(api_data.sensors[KEY_PVPC]) == n_prices_8h
     assert has_prices == available_8h
     if has_prices:
-        last_dt, last_p = list(api_data.sensors[KEY_PVPC].items())[-1]
+        last_dt, _ = list(api_data.sensors[KEY_PVPC].items())[-1]
         assert last_dt.astimezone(timezone).hour == 23
 
 

@@ -5,12 +5,12 @@ Simple aio library to download Spanish electricity hourly prices.
 * Parser for the contents of the JSON files
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from itertools import groupby
 from operator import itemgetter
 from typing import Any
 
-from aiopvpc.const import (
+from .const import (
     DataSource,
     EsiosResponse,
     GEOZONE_ID2NAME,
@@ -23,38 +23,37 @@ from aiopvpc.const import (
     TARIFFS,
     URL_ESIOS_TOKEN_RESOURCE,
     URL_PUBLIC_PVPC_RESOURCE,
-    UTC_TZ,
     zoneinfo,
 )
 
 
 def _timezone_offset(tz: zoneinfo.ZoneInfo = REFERENCE_TZ) -> timedelta:
-    ref_ts = datetime(2021, 1, 1, tzinfo=REFERENCE_TZ).astimezone(UTC_TZ)
-    loc_ts = datetime(2021, 1, 1, tzinfo=tz).astimezone(UTC_TZ)
+    ref_ts = datetime(2021, 1, 1, tzinfo=REFERENCE_TZ).astimezone(timezone.utc)
+    loc_ts = datetime(2021, 1, 1, tzinfo=tz).astimezone(timezone.utc)
     return loc_ts - ref_ts
 
 
 def extract_prices_from_esios_public(
-    data: dict[str, Any], key: str, tz: zoneinfo.ZoneInfo = REFERENCE_TZ
+    data: dict[str, Any], tariff_id: str, tz: zoneinfo.ZoneInfo = REFERENCE_TZ
 ) -> EsiosResponse:
     """Parse the contents of a daily PVPC json file."""
-    ts_init = datetime(
-        *datetime.strptime(data["PVPC"][0]["Dia"], "%d/%m/%Y").timetuple()[:3],
-        tzinfo=tz,
-    ).astimezone(UTC_TZ)
+    pvpc_entries = data["PVPC"]
+    first_entry_date = datetime.strptime(pvpc_entries[0]["Dia"], "%d/%m/%Y")
+    local_start_time = first_entry_date.replace(tzinfo=tz)
+    utc_start_time = local_start_time.astimezone(timezone.utc)
 
-    def _parse_tariff_val(value, prec=PRICE_PRECISION) -> float:
+    def _parse_tariff(value, prec=PRICE_PRECISION) -> float:
         return round(float(value.replace(",", ".")) / 1000.0, prec)
 
     pvpc_prices = {
-        ts_init + timedelta(hours=i): _parse_tariff_val(values_hour[key])
-        for i, values_hour in enumerate(data["PVPC"])
+        utc_start_time + timedelta(hours=hour_index): _parse_tariff(values_hour[tariff_id])
+        for hour_index, values_hour in enumerate(pvpc_entries)
     }
 
     return EsiosResponse(
         name="PVPC ESIOS",
         data_id="legacy",
-        last_update=datetime.utcnow().replace(microsecond=0, tzinfo=UTC_TZ),
+        last_update=datetime.now(timezone.utc).replace(microsecond=0),
         unit="€/kWh",
         series={KEY_PVPC: pvpc_prices},
     )
@@ -72,10 +71,10 @@ def extract_prices_from_esios_token(
     unit = "•".join(mag["name"] for mag in indicator_data["magnitud"])
     unit_tiempo = "•".join(mag["name"] for mag in indicator_data["tiempo"])
     unit += f"/{unit_tiempo}"
-    ts_update = datetime.utcnow().replace(microsecond=0, tzinfo=UTC_TZ)
+    ts_update = datetime.now(timezone.utc).replace(microsecond=0)
 
     def _parse_dt(ts: str) -> datetime:
-        return datetime.fromisoformat(ts).astimezone(UTC_TZ) + offset_timezone
+        return datetime.fromisoformat(ts).astimezone(timezone.utc) + offset_timezone
 
     def _value_unit_conversion(value: float) -> float:
         # from €/MWh to €/kWh

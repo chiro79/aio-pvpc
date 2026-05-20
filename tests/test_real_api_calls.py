@@ -1,19 +1,16 @@
-"""Tests for aiopvpc."""
+"""Tests for aio_pvpc."""
 
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import cast
 from zoneinfo import ZoneInfo
 
 import pytest
 from aiohttp import ClientSession
-from dotenv import load_dotenv
 
-from aiopvpc import PVPCData
-from aiopvpc.const import ALL_SENSORS, DataSource, KEY_PVPC, REFERENCE_TZ
+from aio_pvpc import PVPCData
+from aio_pvpc.const import ALL_SENSORS, DataSource, KEY_PVPC, REFERENCE_TZ
 from tests.conftest import TZ_TEST
-
-load_dotenv()
 
 
 async def _get_real_data(
@@ -25,7 +22,7 @@ async def _get_real_data(
             tariff="2.0TD",
             local_timezone=timezone,
             api_token=os.getenv("ESIOS_TOKEN") if data_source == "esios" else None,
-            data_source=cast(DataSource, data_source),
+            data_source=cast("DataSource", data_source),
             sensor_keys=indicators,
         )
         return await pvpc_data.async_update_all(None, ts)
@@ -45,7 +42,7 @@ async def _get_real_data(
 async def test_real_download_today_async(data_source, timezone, num_sensors):
     sensor_keys = ALL_SENSORS if data_source == "esios" else (KEY_PVPC,)
     api_data = await _get_real_data(
-        timezone, data_source, sensor_keys, datetime.utcnow()
+        timezone, data_source, sensor_keys, datetime.now(timezone.utc)
     )
     assert 22 < len(api_data.sensors[KEY_PVPC]) < 49
     assert len(api_data.sensors) == num_sensors
@@ -57,7 +54,7 @@ if __name__ == "__main__":
     from pprint import pprint
 
     # timestamp = datetime(2021, 10, 30, 21)
-    timestamp = datetime.utcnow()
+    timestamp = datetime.now(timezone.utc)
     api_data = asyncio.run(
         _get_real_data(REFERENCE_TZ, "esios", ALL_SENSORS, timestamp)
     )

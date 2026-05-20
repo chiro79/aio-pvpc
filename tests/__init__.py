@@ -1,1 +1,1 @@
-"""Tests for aiopvpc."""
+"""Tests for aio-pvpc."""

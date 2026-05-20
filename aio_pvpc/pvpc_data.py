@@ -10,15 +10,20 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from asyncio import timeout
 from collections import deque
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from random import random
 from typing import Any
 
 import aiohttp
-import async_timeout
 
-from aiopvpc.const import (
+from aio_pvpc.parser import extract_esios_data, get_daily_urls_to_download
+from aio_pvpc.prices import add_composed_price_sensors, make_price_sensor_attributes
+from aio_pvpc.pvpc_tariff import get_current_and_next_tariff_periods
+from aio_pvpc.utils import ensure_utc_time
+
+from .const import (
     ALL_SENSORS,
     ATTRIBUTIONS,
     DataSource,
@@ -31,13 +36,8 @@ from aiopvpc.const import (
     SENSOR_KEY_TO_API_SERIES,
     SENSOR_KEY_TO_DATAID,
     TARIFFS,
-    UTC_TZ,
     zoneinfo,
 )
-from aiopvpc.parser import extract_esios_data, get_daily_urls_to_download
-from aiopvpc.prices import add_composed_price_sensors, make_price_sensor_attributes
-from aiopvpc.pvpc_tariff import get_current_and_next_tariff_periods
-from aiopvpc.utils import ensure_utc_time
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -176,7 +176,7 @@ class PVPCData:
         Prices are referenced with datetimes in UTC.
         """
         try:
-            async with async_timeout.timeout(self._timeout):
+            async with timeout(self._timeout):
                 return await self._api_get_data(sensor_key, url)
         except (AttributeError, KeyError) as exc:
             _LOGGER.debug("[%s] Bad try on getting prices (%s)", sensor_key, exc)
@@ -383,7 +383,7 @@ class PVPCData:
         if len(current_prices) > 25 and actual_time.hour < 20:
             # there are 'today' and 'next day' prices, but 'today' has expired
             max_age = (
-                utc_time.astimezone(REFERENCE_TZ).replace(hour=0).astimezone(UTC_TZ)
+                utc_time.astimezone(REFERENCE_TZ).replace(hour=0).astimezone(timezone.utc)
             )
             current_data.sensors[sensor_key] = {
                 key_ts: price

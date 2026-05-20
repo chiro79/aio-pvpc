@@ -1,14 +1,13 @@
-"""Tests for aiopvpc."""
+"""Tests for aio_pvpc."""
 
 import logging
-from asyncio import TimeoutError
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import cast
 
 import pytest
 from aiohttp import ClientError
 
-from aiopvpc.const import (
+from aio_pvpc.const import (
     ALL_SENSORS,
     ATTRIBUTIONS,
     DataSource,
@@ -16,9 +15,8 @@ from aiopvpc.const import (
     KEY_OMIE,
     KEY_PVPC,
     REFERENCE_TZ,
-    UTC_TZ,
 )
-from aiopvpc.pvpc_data import BadApiTokenAuthError, PVPCData
+from aio_pvpc.pvpc_data import BadApiTokenAuthError, PVPCData
 from tests.conftest import check_num_datapoints, MockAsyncSession, run_h_step, TZ_TEST
 
 
@@ -49,7 +47,7 @@ async def test_bad_downloads(
     with caplog.at_level(logging.INFO):
         pvpc_data = PVPCData(
             session=mock_session,
-            data_source=cast(DataSource, data_source),
+            data_source=cast("DataSource", data_source),
             api_token=api_token,
         )
         if status in (401, 403):
@@ -79,13 +77,13 @@ async def test_bad_downloads(
 @pytest.mark.asyncio
 async def test_reduced_api_download_rate_dst_change(local_tz, data_source, sensor_keys):
     """Test time evolution and number of API calls."""
-    start = datetime(2021, 10, 30, 15, tzinfo=UTC_TZ)
+    start = datetime(2021, 10, 30, 15, tzinfo=timezone.utc)
     mock_session = MockAsyncSession()
     pvpc_data = PVPCData(
         session=mock_session,
         tariff="2.0TD",
         local_timezone=local_tz,
-        data_source=cast(DataSource, data_source),
+        data_source=cast("DataSource", data_source),
         api_token="test-token" if data_source == "esios" else None,
         sensor_keys=sensor_keys,
     )
@@ -100,7 +98,7 @@ async def test_reduced_api_download_rate_dst_change(local_tz, data_source, senso
     assert all(api_data.availability.values())
 
     # first call for next-day prices
-    assert start == datetime(2021, 10, 30, 18, tzinfo=UTC_TZ)
+    assert start == datetime(2021, 10, 30, 18, tzinfo=timezone.utc)
     start, api_data = await run_h_step(mock_session, pvpc_data, api_data, start)
     assert mock_session.call_count == 2 * len(sensor_keys)
     check_num_datapoints(api_data, sensor_keys, 49)
@@ -119,7 +117,7 @@ async def test_reduced_api_download_rate_dst_change(local_tz, data_source, senso
         # check_num_datapoints(api_data, sensor_keys, 25)
 
     # call for next-day prices (no more available)
-    assert start == datetime(2021, 10, 31, 19, tzinfo=UTC_TZ)
+    assert start == datetime(2021, 10, 31, 19, tzinfo=timezone.utc)
     call_count = mock_session.call_count
     while start.astimezone(local_tz) <= datetime(2021, 10, 31, 23, tzinfo=local_tz):
         start, api_data = await run_h_step(mock_session, pvpc_data, api_data, start)
@@ -151,13 +149,13 @@ async def test_reduced_api_download_rate_dst_change(local_tz, data_source, senso
 @pytest.mark.asyncio
 async def test_reduced_api_download_rate(local_tz, data_source, sensor_keys):
     """Test time evolution and number of API calls."""
-    start = datetime(2024, 3, 9, 2, tzinfo=UTC_TZ)
+    start = datetime(2024, 3, 9, 2, tzinfo=timezone.utc)
     mock_session = MockAsyncSession()
     pvpc_data = PVPCData(
         session=mock_session,
         tariff="2.0TD",
         local_timezone=local_tz,
-        data_source=cast(DataSource, data_source),
+        data_source=cast("DataSource", data_source),
         api_token="test-token" if data_source == "esios" else None,
         sensor_keys=sensor_keys,
     )
@@ -171,7 +169,7 @@ async def test_reduced_api_download_rate(local_tz, data_source, sensor_keys):
         check_num_datapoints(api_data, sensor_keys, 24)
 
     # first call for next-day prices
-    assert start == datetime(2024, 3, 9, 19, tzinfo=UTC_TZ)
+    assert start == datetime(2024, 3, 9, 19, tzinfo=timezone.utc)
     start, api_data = await run_h_step(mock_session, pvpc_data, api_data, start)
     assert mock_session.call_count == 2 * len(sensor_keys)
     check_num_datapoints(api_data, sensor_keys, 24)

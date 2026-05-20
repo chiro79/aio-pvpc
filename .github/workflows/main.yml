@@ -11,17 +11,17 @@ jobs:
       id-token: write
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: 3.10
 
-      - name: Run Poetry image
-        uses: abatilo/actions-poetry@v2.0.0
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v4
         with:
-          poetry-version: 1.7.1
+          poetry-version: 2.4.0
 
       - name: Install library
         run: poetry install --no-interaction
@@ -31,7 +31,7 @@ jobs:
 
         # publish version only when pyproject.toml is changed in master
       - name: Filter changes in pyproject
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v4
         id: changes
         with:
           filters: |
