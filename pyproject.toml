@@ -6,8 +6,8 @@ requires-python = ">= 3.11"
 description = "Retrieval of Spanish Electricity hourly prices (PVPC)"
 keywords = ["pvpc", "Precio Voluntario para el Pequeño Consumidor"]
 authors = [
-    { name = "Eugenio Panadero", email = "eugenio.panadero@gmail.com" },
     { name = "Álvaro Gutiérrez Romero", email = "chiro79@gmail.com" },
+    { name = "Eugenio Panadero", email = "eugenio.panadero@gmail.com" },
 ]
 license = "MIT"
 readme = "README.md"
