@@ -7,7 +7,7 @@ import logging
 import pathlib
 import zoneinfo
 from datetime import date, datetime, timedelta
-from typing import TYPE_CHECKING, Unpack
+from typing import TYPE_CHECKING
 
 from aio_pvpc.const import (
     ESIOS_INJECTION,
@@ -19,9 +19,6 @@ from aio_pvpc.const import (
 )
 
 if TYPE_CHECKING:
-    from aiohttp.client import _RequestOptions
-    from aiohttp.typedefs import StrOrURL
-
     from aio_pvpc.pvpc_data import EsiosApiData, PVPCData
 
 TEST_EXAMPLES_PATH = pathlib.Path(__file__).parent / "api_examples"
@@ -109,7 +106,7 @@ class MockAsyncSession:
         """Dumb await."""
         return self._raw_response
 
-    async def get(self, url: StrOrURL, **_kwargs: Unpack[_RequestOptions]):
+    async def get(self, url: str, **_kwargs):
         """Dumb await."""
         self._counter += 1
         if self.exc:
