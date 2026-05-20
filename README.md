@@ -8,8 +8,8 @@
 [pypi-url]: https://pypi.org/project/esios-api/
 [pre-commit-ci-image]: https://results.pre-commit.ci/badge/github/chiro79/esios-api/master.svg
 [pre-commit-ci-url]: https://results.pre-commit.ci/latest/github/chiro79/esios-api/master
-[build-image]: https://github.com/chiro79/esios-api/actions/workflows/main.yml/badge.svg
-[build-url]: https://github.com/chiro79/esios-api/actions/workflows/main.yml
+[build-image]: https://github.com/chiro79/esios-api/actions/workflows/main.yaml/badge.svg
+[build-url]: https://github.com/chiro79/esios-api/actions/workflows/main.yaml
 
 # esios-api
 
