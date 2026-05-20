@@ -1,11 +1,11 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 from datetime import datetime, timedelta
 from typing import cast
 
 import pytest
 
-from aio_pvpc.const import (
+from esios_api.const import (
     ALL_SENSORS,
     DataSource,
     KEY_ADJUSTMENT,
@@ -16,7 +16,7 @@ from aio_pvpc.const import (
     REFERENCE_TZ,
     SENSOR_KEY_TO_DATAID,
 )
-from aio_pvpc.pvpc_data import PVPCData
+from esios_api.pvpc_data import PVPCData
 from tests.conftest import MockAsyncSession, TZ_TEST
 
 

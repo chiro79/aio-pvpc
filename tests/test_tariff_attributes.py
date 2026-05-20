@@ -1,11 +1,11 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 from datetime import datetime, timedelta
 
 import pytest
 
-from aio_pvpc.const import REFERENCE_TZ
-from aio_pvpc.pvpc_tariff import get_current_and_next_tariff_periods
+from esios_api.const import REFERENCE_TZ
+from esios_api.pvpc_tariff import get_current_and_next_tariff_periods
 
 
 @pytest.mark.parametrize(

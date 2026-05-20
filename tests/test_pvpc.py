@@ -1,4 +1,4 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 import logging
 from datetime import datetime, timedelta, timezone
@@ -7,7 +7,7 @@ from typing import cast
 import pytest
 from aiohttp import ClientError
 
-from aio_pvpc.const import (
+from esios_api.const import (
     ALL_SENSORS,
     ATTRIBUTIONS,
     DataSource,
@@ -16,7 +16,7 @@ from aio_pvpc.const import (
     KEY_PVPC,
     REFERENCE_TZ,
 )
-from aio_pvpc.pvpc_data import BadApiTokenAuthError, PVPCData
+from esios_api.pvpc_data import BadApiTokenAuthError, PVPCData
 from tests.conftest import check_num_datapoints, MockAsyncSession, run_h_step, TZ_TEST
 
 

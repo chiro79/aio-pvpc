@@ -1,4 +1,4 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 import pytest
 
-from aio_pvpc.const import (
+from esios_api.const import (
     ALL_SENSORS,
     KEY_ADJUSTMENT,
     KEY_INJECTION,
@@ -16,8 +16,8 @@ from aio_pvpc.const import (
     KEY_PVPC,
     TARIFFS,
 )
-from aio_pvpc.ha_helpers import get_enabled_sensor_keys, make_sensor_unique_id
-from aio_pvpc.pvpc_data import BadApiTokenAuthError, PVPCData
+from esios_api.ha_helpers import get_enabled_sensor_keys, make_sensor_unique_id
+from esios_api.pvpc_data import BadApiTokenAuthError, PVPCData
 from tests.conftest import check_num_datapoints, MockAsyncSession, run_h_step
 
 

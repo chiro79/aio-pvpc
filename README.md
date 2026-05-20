@@ -4,14 +4,14 @@
 
 <!-- Badges -->
 
-[pypi-image]: https://img.shields.io/pypi/v/aiopvpc
-[pypi-url]: https://pypi.org/project/aiopvpc/
-[pre-commit-ci-image]: https://results.pre-commit.ci/badge/github/azogue/aiopvpc/master.svg
-[pre-commit-ci-url]: https://results.pre-commit.ci/latest/github/azogue/aiopvpc/master
-[build-image]: https://github.com/azogue/aiopvpc/actions/workflows/main.yml/badge.svg
-[build-url]: https://github.com/azogue/aiopvpc/actions/workflows/main.yml
+[pypi-image]: https://img.shields.io/pypi/v/esios-api
+[pypi-url]: https://pypi.org/project/esios-api/
+[pre-commit-ci-image]: https://results.pre-commit.ci/badge/github/chiro79/esios-api/master.svg
+[pre-commit-ci-url]: https://results.pre-commit.ci/latest/github/chiro79/esios-api/master
+[build-image]: https://github.com/chiro79/esios-api/actions/workflows/main.yml/badge.svg
+[build-url]: https://github.com/chiro79/esios-api/actions/workflows/main.yml
 
-# aio-pvpc
+# esios-api
 
 _This is a fork of the, now abandoned, [aiopvpc](https://github.com/azogue/aiopvpc) library from
 [azogue](https://github.com/azogue). Plese, take note that I expect to improve and do a deep change on this library in the near future._
@@ -27,14 +27,14 @@ _Or to the [original library developer](https://www.buymeacoffee.com/azogue)_
 
 ## Install
 
-Install with `pip install aio-pvpc` or clone it to run tests or anything else.
+Install with `pip install esios-api` or clone it to run tests or anything else.
 
 ## Usage
 
 ```python
 import aiohttp
 from datetime import datetime, timezone
-from aio_pvpc import PVPCData
+from esios_api import PVPCData
 
 async with aiohttp.ClientSession() as session:
     pvpc_handler = PVPCData(session=session, tariff="2.0TD")

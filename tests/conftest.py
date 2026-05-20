@@ -1,4 +1,4 @@
-"""Tests for aio-pvpc."""
+"""Tests for esios-api."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import zoneinfo
 from datetime import date, datetime, timedelta
 from typing import TYPE_CHECKING
 
-from aio_pvpc.const import (
+from esios_api.const import (
     ESIOS_INJECTION,
     ESIOS_MAG,
     ESIOS_MARKET_ADJUSTMENT,
@@ -19,7 +19,7 @@ from aio_pvpc.const import (
 )
 
 if TYPE_CHECKING:
-    from aio_pvpc.pvpc_data import EsiosApiData, PVPCData
+    from esios_api.pvpc_data import EsiosApiData, PVPCData
 
 TEST_EXAMPLES_PATH = pathlib.Path(__file__).parent / "api_examples"
 TZ_TEST = zoneinfo.ZoneInfo("Atlantic/Canary")

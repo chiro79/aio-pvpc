@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.4.0](https://github.com/azogue/aiopvpc/tree/v4.3.1) - 🐛 Taking over the lib with a new name by @chiro79 and fixing calendar for 2026 (2026-05-21)
+
+[Full Changelog](https://github.com/azogue/aiopvpc/compare/v4.3.0...v4.3.1)
+
+- 🐛 Adds 2026 calendar
+- 👷 cleans up a little bit the dependencies and decouple dependency management
+- 👷 Uses timeout class from asyncio instead of deprecated `async_timeout`
+
 ## [v4.3.1](https://github.com/azogue/aiopvpc/tree/v4.3.1) - 🐛 Fix unsorted prices in composed sensor 'INDEXED' (2024-03-25)
 
 [Full Changelog](https://github.com/azogue/aiopvpc/compare/v4.3.0...v4.3.1)

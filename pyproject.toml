@@ -1,5 +1,5 @@
 [project]
-name = "aio-pvpc"
+name = "esios-api"
 version = "4.4.0"
 requires-python = ">= 3.11"
 
@@ -23,8 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/chiro79/aio-pvpc"
-Repository = "https://github.com/chiro79/aio-pvpc"
+Homepage = "https://github.com/chiro79/esios-api"
+Repository = "https://github.com/chiro79/esios-api"
 
 [build-system]
 requires = ["poetry_core>=2.4.0"]
@@ -54,10 +54,10 @@ order-by-type = false
 
 [tool.coverage.run]
 branch = true
-source = ["aio_pvpc"]
+source = ["esios_api"]
 
 [tool.coverage.paths]
-source = ["aio_pvpc/"]
+source = ["esios_api/"]
 
 [tool.coverage.report]
 fail_under = 95

@@ -1,12 +1,12 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 from datetime import datetime, timezone
 from typing import cast
 
 import pytest
 
-from aio_pvpc.const import DataSource, KEY_PVPC, REFERENCE_TZ, TARIFFS
-from aio_pvpc.pvpc_data import PVPCData
+from esios_api.const import DataSource, KEY_PVPC, REFERENCE_TZ, TARIFFS
+from esios_api.pvpc_data import PVPCData
 from tests.conftest import MockAsyncSession, TZ_TEST
 
 

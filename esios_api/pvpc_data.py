@@ -18,10 +18,10 @@ from typing import Any
 
 import aiohttp
 
-from aio_pvpc.parser import extract_esios_data, get_daily_urls_to_download
-from aio_pvpc.prices import add_composed_price_sensors, make_price_sensor_attributes
-from aio_pvpc.pvpc_tariff import get_current_and_next_tariff_periods
-from aio_pvpc.utils import ensure_utc_time
+from esios_api.parser import extract_esios_data, get_daily_urls_to_download
+from esios_api.prices import add_composed_price_sensors, make_price_sensor_attributes
+from esios_api.pvpc_tariff import get_current_and_next_tariff_periods
+from esios_api.utils import ensure_utc_time
 
 from .const import (
     ALL_SENSORS,

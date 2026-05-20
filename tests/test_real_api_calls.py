@@ -1,4 +1,4 @@
-"""Tests for aio_pvpc."""
+"""Tests for esios_api."""
 
 import os
 from datetime import datetime, timezone
@@ -8,8 +8,8 @@ from zoneinfo import ZoneInfo
 import pytest
 from aiohttp import ClientSession
 
-from aio_pvpc import PVPCData
-from aio_pvpc.const import ALL_SENSORS, DataSource, KEY_PVPC, REFERENCE_TZ
+from esios_api import PVPCData
+from esios_api.const import ALL_SENSORS, DataSource, KEY_PVPC, REFERENCE_TZ
 from tests.conftest import TZ_TEST
 
 
